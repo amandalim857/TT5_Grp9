@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <EachProject/>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LoginPage></LoginPage> -->
+    <Dashboard></Dashboard>
+    <!-- <EachProject/> -->
   </div>
 </template>
 
 <script>
-// import Dashboard from '@/components/Dashboard.vue'
+import Dashboard from '@/components/Dashboard.vue'
 // import HelloWorld from './components/HelloWorld.vue'
-import EachProject from './components/Project.vue'
+// import LoginPage from './components/Login.vue'
+// import EachProject from './components/Project.vue'
 
 export default {
   name: 'App',
   components: {
-    EachProject
+    // HelloWorld,
+    Dashboard,
+    // LoginPage,
+    // EachProject
   }
 }
 </script>

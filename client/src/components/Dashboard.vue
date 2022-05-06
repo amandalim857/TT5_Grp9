@@ -13,12 +13,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">{{id}}</th>
-                    <td>{{user_id}}</td>
-                    <td>{{name}}</td>
-                    <td>{{budget}}</td>
-                    <td>{{description}}</td>
+                  <tr v-for="project in projects" :key="project.id">
+                    <th scope="row">{{project.id}}</th>
+                    <td>{{project.user_id}}</td>
+                    <td>{{project.name}}</td>
+                    <td>{{project.budget}}</td>
+                    <td>{{project.description}}</td>
                   </tr>
                 </tbody>
             </table>
