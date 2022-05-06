@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const { connectToDb, getDb } = require("./db.js");
 
 const app = express();
-const port = process.env.AUTH_SERVER_PORT || 5000;
+const port = process.env.AUTH_SERVER_PORT || 8000;
 
 app.use(express.json());
 
