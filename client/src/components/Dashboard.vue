@@ -1,29 +1,31 @@
 <template>
-  <div class="hello">
-    <table>
-    <tr>
-        <th>ID</th>
-        <th>User ID</th>
-        <th>Name</th>
-        <th>Budget</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>4</td>
-        <td>posb</td>
-        <td>3434</td>
-        <td>Hello hello</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>3</td>
-        <td>dbs</td>
-        <td>34315</td>
-        <td>Hello hello hello</td>
-    </tr>
-    </table>
-  </div>
+  <div class="container container-fluid">
+        <div class="row mt-5">
+
+            <table class="table table-hover col-lg-12" id="center">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">User_ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">BUDGET</th>
+                    <th scope="col">DESCRIPTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">{{id}}</th>
+                    <td>{{user_id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{budget}}</td>
+                    <td>{{description}}</td>
+                  </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
 </template>
 
 <script>
@@ -31,6 +33,35 @@ export default {
   name: 'DashBoard',
   props: {
     msg: String
+  },
+
+  data: function() {
+      return {
+          //assume the following data is obtained dynamically through Asynchronous requests
+          projects: [
+          {
+              "id": 1,
+              "user_id": 4,
+              "name": "RTF",
+              "budget": 12000,
+              "description": "Realtime Face Recogniton"
+          },
+          {
+              "id": 2,
+              "user_id": 1,
+              "name": "SWT",
+              "budget": 80000,
+              "description": "Smart Watch Tracker"
+          },
+          {
+              "id": 3,
+              "user_id": 2,
+              "name": "ULS",
+              "budget": 11000,
+              "description": "Upgrade Legacy System"
+          } 
+          ]
+      }
   }
 }
 </script>
@@ -50,5 +81,9 @@ li {
 }
 a {
   color: #42b983;
+}
+#center {
+        margin-left: auto;
+        margin-right: auto;
 }
 </style>
