@@ -91,3 +91,20 @@ def getAllExpense(project_id):
         return jsonify({"Expenses": []}), 200
 
     return [expense.json for expense in expenses]
+
+# Delete an expense from the project
+@app.route("/deleteExpense", methods=['DELETE'])
+def deleteExpense():
+    data = request.get_json()
+
+    project_id = data['project_id']
+    expense_id = data['expense_id']
+
+    expense = Expense.query.filter_by(project_id=project_id, expense_id=expense_id).first()
+
+    if expense:
+        db.session.delete(expense)
+        db.session.commit()
+        return "Successfully Deleted"
+
+    return "Record does not exist"
