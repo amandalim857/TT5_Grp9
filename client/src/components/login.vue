@@ -1,5 +1,6 @@
 <template>
-<!-- nav bar -->
+<div>
+    <!-- nav bar -->
     <nav class="navbar navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="https://www.smu.edu.sg/">
@@ -25,8 +26,8 @@
                     </p>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="user-email" v-model="input_email" placeholder="username" required>
+                        <label for="email" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="user-name" v-model="input_email" placeholder="username" required>
                     </div>
     
                     <div class="mb-3">
@@ -46,12 +47,14 @@
         </div>
 
     </div>
-
+</div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'Login Here',
+  name: 'LoginPage',
   props: {
     msg: String
   },
@@ -86,10 +89,14 @@ export default {
     validate(){
         console.log("=== start validate() ===")
         localStorage.setItem('email', this.input_email)
-        // console.log(localStorage.getItem('email')) //using this to retrieve the email
-        let url = "../backend/verifyStudent.php?student_email=" + this.input_email + "&password=" + this.input_password
-
-        axios.get(url)
+        console.log(localStorage.getItem('email')) //using this to retrieve the email
+        let url = "http://localhost:5000/login"
+        var username = document.getElementById("user-name").value
+        var password = document.getElementById("user-password").value
+        // console.log(username, password)
+        var user = {"username": username,
+                    "password": password}
+        axios.post(url, user)
         .then((response) => {
             console.log(response)
             if(response.data == 'wrong email or password'){
@@ -103,6 +110,8 @@ export default {
             console.log('not found')
             console.log(error.message)
         })
+    }
+    }
 }
 </script>
 
