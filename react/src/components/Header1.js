@@ -5,8 +5,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import {useNavigate} from "react-router-dom"
+
+import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 
 function Header1(props) {
   const { title } = props;
@@ -32,13 +32,15 @@ function Header1(props) {
         >
           {title}
         </Typography>
-
-        <Button onclick={handleLogin} variant="outlined" size="small">
+        <Button>
+        <Link to="/Login" bordervariant="outlined" size="small">
           Login
+        </Link>
         </Button>
-        <Button onclick={handleSignUp} variant="outlined" size="small">
+        <Button>
+        <Link to='/Register' variant="outlined" size="small">
           Sign up
-        </Button>
+        </Link></Button>
       </Toolbar>
       <Toolbar
         component="nav"
