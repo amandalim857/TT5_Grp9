@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LoginPage></LoginPage>
     <Dashboard></Dashboard>
   </div>
 </template>
@@ -9,12 +10,14 @@
 <script>
 import Dashboard from '@/components/Dashboard.vue'
 import HelloWorld from './components/HelloWorld.vue'
+import LoginPage from './components/Login.vue'
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
-    Dashboard
+    Dashboard,
+    LoginPage
   }
 }
 </script>
