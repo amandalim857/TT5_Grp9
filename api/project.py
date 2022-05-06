@@ -77,6 +77,22 @@ class Expense(db.Model):
         }
         return expense_entry
 
+# POST a new project
+@app.route("/addProject/<int:user_id>", methods=['POST'])
+def addProject(user_id):
+    new_user_id = request.json['user_id']
+    new_name = request.json['name']
+    new_budget = request.json['budget']
+    new_description = request.json['description']
+
+    try:
+        new_project = Project(user_id = new_user_id, name= new_name, budget=new_budget, description=new_description)
+        db.session.add(new_project)
+        db.session.commit()
+        return jsonify("{} was created".format(new_project))
+    except Exception as e:
+        return(str(e))
+
 
 # Return list of all details in a project
 @app.route("/getAllProject/<int:user_id>", methods=['GET'])
@@ -120,6 +136,19 @@ def addExpense():
 
     db.session.add(data)
     db.session.commit()
+
+# Update a particular expense
+@app.route("/updateExpense", methods=['POST'])
+def updateExpense():
+    data = request.get_json()
+
+    expense_id = data['expense_id']
+    if not expense_id:
+        return "Expense record not found"
+
+    expense = Expense.query.filter_by(expense_id=expense_id).update(data)
+    db.session.commit()
+    return "Successful update"
 
 
 # Delete an expense from the project
