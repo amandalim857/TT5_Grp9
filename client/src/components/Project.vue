@@ -3,7 +3,7 @@
         <h1>project title here</h1>
 
         <!-- Remove -->
-        <button type="button" class="btn btn-danger mx-2" @click="add">
+        <button type="button" class="btn btn-primary mx-2" @click="add">
             Add
         </button>
 
@@ -65,16 +65,16 @@
                     </button>
                     
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + expense.id">
                         Edit
                     </button>
                 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" :id="'exampleModal'+expense.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Expense name/title here</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{expense.name}}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -191,6 +191,10 @@ export default {
           console.log('delete here')
           alert("Are you sure you want to remove the business expense for this project?")
           // proceed to call axios and delete from db
+      },
+
+      add: function() {
+          console.log('add here')
       }
   }
 }
