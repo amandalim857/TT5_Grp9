@@ -75,3 +75,19 @@ class Expense(db.Model):
             "updated_by": self.updated_by
         }
         return expense_entry
+
+# Return list of all expenses in a project
+@app.route("/getAllExpense/<int:project_id>", methods=['GET'])
+def getAllExpense(project_id):
+    project = Project.query.filter_by(project_id=project_id).first()
+
+    # Project does not exist
+    if not project:
+        return jsonify({"Expenses" : []}), 200
+
+    expenses = Expense.query.filter_by(project_id=project_id).all()
+
+    if not expenses:
+        return jsonify({"Expenses": []}), 200
+
+    return [expense.json for expense in expenses]
