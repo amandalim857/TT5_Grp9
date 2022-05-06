@@ -11,14 +11,6 @@ import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 function Header1(props) {
   const { title } = props;
 
-  const handleSignUp = ()=> {
-    
-  }
-
-  const handleLogin = ()=> {
-    
-  }
-
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>

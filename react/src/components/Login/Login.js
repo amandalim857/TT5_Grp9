@@ -13,22 +13,33 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {useState} from "react"
 
 
 export default function SignIn() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    navigate('/')
+    console.log(username)
+    axios.post("http://localhost:5000/login", {username, password}).then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   username: data.get('username'),
+    //   password: data.get('password'),
+    // });
+    // navigate('/')
   };
 
   const theme = createTheme();
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
 
   return (
@@ -54,10 +65,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="username"
+              name="username"
+              autoComplete="username"
               // autoFocus
             />
             <TextField
