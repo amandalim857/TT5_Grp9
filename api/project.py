@@ -93,19 +93,15 @@ def addProject(user_id):
     except Exception as e:
         return(str(e))
 
+projects = [{"id": 1,"user_id": 4,"name": "RTF","budget": 12000,"description": "Realtime Face Recogniton"},{"id": 2,"user_id": 1,"name": "SWT","budget": 80000,"description": "Smart Watch Tracker"},{"id": 3,"user_id": 2,"name": "ULS","budget": 11000,"description": "Upgrade Legacy System"}]
 
 # Return list of all details in a project
 @app.route("/getAllProject/<int:user_id>", methods=['GET'])
-def getAllProject(user_id):
-    project = Project.query.filter_by(user_id=user_id).first()
+@app.route("/getAllProject/", methods=['GET'])
 
-    # Project does not exist
-    if not project:
-        return jsonify({"Project": []}), 200
+def getAllProject():
 
-    project = Project.query.filter_by(user_id=user_id).all()
-
-    return [i.json for i in project]
+    return jsonify({"projects":projects})
 
 
 # Return list of all expenses in a project
