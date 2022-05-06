@@ -1,25 +1,25 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
-
 # Connect Flask to database
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = '???'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Attach Flask app to database
 db = SQLAlchemy(app)
 
+
 class Project(db.Model):
     __tablename__ = 'project'
-    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.Text, nullable=False)
     budget = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    def __init__(self, id, user_id, name, budget, description):
-        self.id = id
+    def __init__(self, project_id, user_id, name, budget, description):
+        self.project_id = project_id
         self.user_id = user_id
         self.name = name
         self.budget = budget
@@ -27,7 +27,7 @@ class Project(db.Model):
 
     def json(self):
         project_entry = {
-            "id": self.id,
+            "project_id": self.project_id,
             "user_id": self.user_id,
             "name": self.name,
             "budget": self.budget,
@@ -35,10 +35,11 @@ class Project(db.Model):
         }
         return project_entry
 
+
 # Creation of Project Objects
 class Expense(db.Model):
     __tablename__ = 'expense'
-    id = db.Column(db.Integer, primary_key=True)
+    expense_id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.Text, nullable=False)
@@ -49,9 +50,9 @@ class Expense(db.Model):
     updated_at = db.Column(db.TIMESTAMP, nullable=False)
     updated_by = db.Column(db.Text, nullable=False)
 
-    def __init__(self, id, project_id, category_id, name, description, amount,
+    def __init__(self, expense_id, project_id, category_id, name, description, amount,
                  created_at, created_by, updated_at, updated_by):
-        self.id = id
+        self.expense_id = expense_id
         self.project_id = project_id
         self.category_id = category_id
         self.name = name
@@ -76,6 +77,7 @@ class Expense(db.Model):
         }
         return expense_entry
 
+
 # Return list of all details in a project
 @app.route("/getAllProject/<int:user_id>", methods=['GET'])
 def getAllProject(user_id):
@@ -83,17 +85,17 @@ def getAllProject(user_id):
 
     # Project does not exist
     if not project:
-        return jsonify({"Project" : []}), 200
+        return jsonify({"Project": []}), 200
 
     project = Project.query.filter_by(user_id=user_id).all()
 
-
     return [i.json for i in project]
+
 
 # Return list of all expenses in a project
 @app.route("/getAllExpense/<int:project_id>", methods=['GET'])
 def getAllExpense(project_id):
-    project = Project.query.filter_by(id=project_id).first()
+    project = Project.query.filter_by(project_id=project_id).first()
 
     # Project does not exist
     if not project:
@@ -105,6 +107,20 @@ def getAllExpense(project_id):
         return jsonify({"Expenses": []}), 200
 
     return [expense.json for expense in expenses]
+
+
+# Add an expense to a project
+@app.route("/addExpense", methods=['POST'])
+def addExpense():
+    data = request.get_json()
+    project_id = data['project_id']
+
+    if not project_id:
+        return "Project not found"
+
+    db.session.add(data)
+    db.session.commit()
+
 
 # Delete an expense from the project
 @app.route("/deleteExpense", methods=['DELETE'])
